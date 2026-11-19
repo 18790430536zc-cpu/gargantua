@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>GARGANTUA — Schwarzschild Black Hole Raytracer</title>
+<link rel="stylesheet" href="./css/style.css">
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js"
+  }
+}
+</script>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<audio id="ambient" src="./assets/ambient.wav" loop preload="none"></audio>
+
+<div id="veil"><div class="ring"></div><p>正在积分零测地线 …</p></div>
+
+<header id="masthead" class="overlay">
+  <div class="eyebrow">SCHWARZSCHILD NULL GEODESIC RAYTRACER</div>
+  <h1>GARGANTUA</h1>
+</header>
+
+<!-- 遥测 HUD -->
+<dl id="hud" class="overlay">
+  <div class="frame">
+    <div class="tag">// 遥测</div>
+    <dt>相机距离</dt><dd><span id="h-dist">–</span> <em>Rs</em></dd>
+    <dt>轨道倾角</dt><dd><span id="h-incl">–</span><em>°</em></dd>
+    <dt>帧率</dt><dd><span id="h-fps">–</span> <em>fps</em></dd>
+    <dt>质量档</dt><dd id="h-quality">–</dd>
+    <dt>调试视图</dt><dd id="h-debug">关</dd>
+  </div>
+</dl>
+
+<!-- 视角预设 + 质量档 + 功能键 -->
+<nav id="dock" class="overlay">
+  <div class="dock-row">
+    <button class="preset-btn active">1 标准轨道</button>
+    <button class="preset-btn">2 侧视盘缘</button>
+    <button class="preset-btn">3 高俯角</button>
+    <button class="preset-btn">4 逼近视界</button>
+  </div>
+  <div class="dock-row">
+    <button class="q-btn" data-q="standard">Standard</button>
+    <button class="q-btn active" data-q="high">High</button>
+    <button class="q-btn" data-q="cinematic">Cinematic</button>
+    <span class="sep"></span>
+    <button id="b-cine" title="快捷键 C">电影镜头</button>
+    <button id="b-music" title="快捷键 M">氛围音乐</button>
+    <button id="b-reset" title="快捷键 R">重置</button>
+  </div>
+</nav>
+
+<!-- 参数面板 -->
+<aside id="panel" class="overlay">
+  <div class="panel-head">
+    <h2>参数 · 21 项</h2>
+    <button id="panel-toggle">收起参数</button>
+  </div>
+  <div id="panel-body"></div>
+</aside>
+
+<footer id="hint" class="overlay">
+  <span><i>1–4</i> 预设</span><span><i>D+0–9</i> 调试</span><span><i>C</i> 电影镜头</span>
+  <span><i>M</i> 音乐</span><span><i>H</i> HUD</span><span><i>F</i> 全屏</span><span><i>R</i> 重置</span>
+</footer>
+
+<script type="module" src="./js/main.js"></script>
+<script>
+  // 预设按钮（模块加载前即可绑定，点击转发键盘事件语义）
+  document.querySelectorAll('.preset-btn').forEach(function (b, i) {
+    b.addEventListener('click', function () {
+      window.dispatchEvent(new KeyboardEvent('keydown', { key: String(i + 1) }));
+    });
+  });
+</script>
+</body>
+</html>
